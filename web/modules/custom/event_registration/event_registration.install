@@ -1,0 +1,124 @@
+<?php
+
+/**
+ * @file
+ * Install file for Event Registration module.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function event_registration_schema() {
+  $schema = [];
+
+  /**
+   * Event configuration table.
+   * Stores admin-created events.
+   */
+  $schema['event_registration_event'] = [
+    'description' => 'Stores event configuration details.',
+    'fields' => [
+      'id' => [
+        'description' => 'Primary key.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'event_name' => [
+        'description' => 'Event name.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ],
+      'category' => [
+        'description' => 'Event category.',
+        'type' => 'varchar',
+        'length' => 100,
+        'not null' => TRUE,
+      ],
+      'registration_start_date' => [
+        'description' => 'Registration start date.',
+        'type' => 'int',
+        'not null' => TRUE,
+      ],
+      'registration_end_date' => [
+        'description' => 'Registration end date.',
+        'type' => 'int',
+        'not null' => TRUE,
+      ],
+      'event_date' => [
+        'description' => 'Event date.',
+        'type' => 'int',
+        'not null' => TRUE,
+      ],
+      'created' => [
+        'description' => 'Created timestamp.',
+        'type' => 'int',
+        'not null' => TRUE,
+      ],
+    ],
+    'primary key' => ['id'],
+    'indexes' => [
+      'category' => ['category'],
+      'event_date' => ['event_date'],
+    ],
+  ];
+
+  /**
+   * Event registration table.
+   * Stores user registrations.
+   */
+  $schema['event_registration_signup'] = [
+    'description' => 'Stores event registration data.',
+    'fields' => [
+      'id' => [
+        'description' => 'Primary key.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'event_id' => [
+        'description' => 'Foreign key referencing event_registration_event.id.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'full_name' => [
+        'description' => 'Registrant full name.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ],
+      'email' => [
+        'description' => 'Registrant email address.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ],
+      'college_name' => [
+        'description' => 'College name.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ],
+      'department' => [
+        'description' => 'Department name.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ],
+      'created' => [
+        'description' => 'Submission timestamp.',
+        'type' => 'int',
+        'not null' => TRUE,
+      ],
+    ],
+    'primary key' => ['id'],
+    'indexes' => [
+      'email' => ['email'],
+      'event_id' => ['event_id'],
+    ],
+  ];
+
+  return $schema;
+}
